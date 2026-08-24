@@ -1,957 +1,957 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>智慧時間管理與任務清單 - 可愛卡通版</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome 圖標 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts: Fredoka (可愛圓潤英文) & Zen Maru Gothic / Noto Sans TC (可愛繁中) -->
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Zen+Maru+Gothic:wght@500;700;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-    
-    <style>
-        body {
-            font-family: 'Fredoka', 'Zen Maru Gothic', 'Noto Sans TC', cursive, sans-serif;
-            background-color: #fefce8;
-            background-image: radial-gradient(#fde047 1.5px, transparent 1.5px), radial-gradient(#fde047 1.5px, #fefce8 1.5px);
-            background-size: 60px 60px;
-            background-position: 0 0, 30px 30px;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智慧時間管理與任務清單 - 可愛卡通版</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome 圖標 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Fredoka (可愛圓潤英文) & Zen Maru Gothic / Noto Sans TC (可愛繁中) -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Zen+Maru+Gothic:wght@500;700;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Fredoka', 'Zen Maru Gothic', 'Noto Sans TC', cursive, sans-serif;
+            background-color: #fefce8;
+            background-image: radial-gradient(#fde047 1.5px, transparent 1.5px), radial-gradient(#fde047 1.5px, #fefce8 1.5px);
+            background-size: 60px 60px;
+            background-position: 0 0, 30px 30px;
+        }
 
-        /* 可愛卡片 3D 立體邊框 shadow */
-        .cartoon-card {
-            box-shadow: 0 10px 0 0 rgba(251, 191, 36, 0.4);
-        }
-        .cartoon-card-blue {
-            box-shadow: 0 10px 0 0 rgba(186, 230, 253, 0.8);
-        }
+        /* 可愛卡片 3D 立體邊框 shadow */
+        .cartoon-card {
+            box-shadow: 0 10px 0 0 rgba(251, 191, 36, 0.4);
+        }
+        .cartoon-card-blue {
+            box-shadow: 0 10px 0 0 rgba(186, 230, 253, 0.8);
+        }
 
-        /* 立體按鈕效果 */
-        .btn-cartoon {
-            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 5px 0 0 #d97706;
-        }
-        .btn-cartoon:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 7px 0 0 #d97706;
-        }
-        .btn-cartoon:active {
-            transform: translateY(3px);
-            box-shadow: 0 2px 0 0 #d97706;
-        }
+        /* 立體按鈕效果 */
+        .btn-cartoon {
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 5px 0 0 #d97706;
+        }
+        .btn-cartoon:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 0 0 #d97706;
+        }
+        .btn-cartoon:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 0 #d97706;
+        }
 
-        /* 藍色按鈕 */
-        .btn-cartoon-blue {
-            box-shadow: 0 5px 0 0 #0284c7;
-        }
-        .btn-cartoon-blue:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 7px 0 0 #0284c7;
-        }
-        .btn-cartoon-blue:active {
-            transform: translateY(3px);
-            box-shadow: 0 2px 0 0 #0284c7;
-        }
+        /* 藍色按鈕 */
+        .btn-cartoon-blue {
+            box-shadow: 0 5px 0 0 #0284c7;
+        }
+        .btn-cartoon-blue:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 0 0 #0284c7;
+        }
+        .btn-cartoon-blue:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 0 #0284c7;
+        }
 
-        /* 警報可愛彈跳與閃爍特效 */
-        @keyframes cuteAlarmPulse {
-            0% {
-                background-color: #ffe4e6;
-                border-color: #f43f5e;
-                box-shadow: 0 0 20px rgba(244, 63, 94, 0.4);
-                transform: scale(1.01) rotate(-0.5deg);
-            }
-            50% {
-                background-color: #fecdd3;
-                border-color: #e11d48;
-                box-shadow: 0 0 30px rgba(225, 29, 72, 0.7);
-                transform: scale(1.03) rotate(0.5deg);
-            }
-            100% {
-                background-color: #ffe4e6;
-                border-color: #f43f5e;
-                box-shadow: 0 0 20px rgba(244, 63, 94, 0.4);
-                transform: scale(1.01) rotate(-0.5deg);
-            }
-        }
+        /* 警報可愛彈跳與閃爍特效 */
+        @keyframes cuteAlarmPulse {
+            0% {
+                background-color: #ffe4e6;
+                border-color: #f43f5e;
+                box-shadow: 0 0 20px rgba(244, 63, 94, 0.4);
+                transform: scale(1.01) rotate(-0.5deg);
+            }
+            50% {
+                background-color: #fecdd3;
+                border-color: #e11d48;
+                box-shadow: 0 0 30px rgba(225, 29, 72, 0.7);
+                transform: scale(1.03) rotate(0.5deg);
+            }
+            100% {
+                background-color: #ffe4e6;
+                border-color: #f43f5e;
+                box-shadow: 0 0 20px rgba(244, 63, 94, 0.4);
+                transform: scale(1.01) rotate(-0.5deg);
+            }
+        }
 
-        .alarm-flashing {
-            animation: cuteAlarmPulse 0.8s infinite ease-in-out;
-            z-index: 20;
-        }
+        .alarm-flashing {
+            animation: cuteAlarmPulse 0.8s infinite ease-in-out;
+            z-index: 20;
+        }
 
-        /* 質感發光數位效果 (明亮版) */
-        .digital-glow-bright {
-            text-shadow: 0 4px 10px rgba(2, 132, 199, 0.2);
-        }
+        /* 質感發光數位效果 (明亮版) */
+        .digital-glow-bright {
+            text-shadow: 0 4px 10px rgba(2, 132, 199, 0.2);
+        }
 
-        /* 模擬時鐘樣式 */
-        .clock-face {
-            stroke: #38bdf8;
-            stroke-width: 5;
-            fill: #ffffff;
-        }
-        .hand {
-            stroke-linecap: round;
-            transform-origin: 50% 50%;
-            transition: transform 0.05s cubic-bezier(0.4, 2.08, 0.55, 0.44);
-        }
-        .hour-hand { stroke: #0284c7; stroke-width: 7; }
-        .minute-hand { stroke: #38bdf8; stroke-width: 5; }
-        .second-hand { stroke: #f43f5e; stroke-width: 3; }
+        /* 模擬時鐘樣式 */
+        .clock-face {
+            stroke: #38bdf8;
+            stroke-width: 5;
+            fill: #ffffff;
+        }
+        .hand {
+            stroke-linecap: round;
+            transform-origin: 50% 50%;
+            transition: transform 0.05s cubic-bezier(0.4, 2.08, 0.55, 0.44);
+        }
+        .hour-hand { stroke: #0284c7; stroke-width: 7; }
+        .minute-hand { stroke: #38bdf8; stroke-width: 5; }
+        .second-hand { stroke: #f43f5e; stroke-width: 3; }
 
-        /* 自訂可愛滾動條 */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #fef3c7;
-            border-radius: 9999px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #fcd34d;
-            border: 2px solid #fef3c7;
-            border-radius: 9999px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #fbbf24;
-        }
-    </style>
+        /* 自訂可愛滾動條 */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fef3c7;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #fcd34d;
+            border: 2px solid #fef3c7;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #fbbf24;
+        }
+    </style>
 </head>
 <body class="text-slate-800 min-h-screen flex flex-col selection:bg-amber-300 selection:text-amber-950 pb-8">
 
-    <!-- 頂部導覽列 -->
-    <header class="bg-white/90 backdrop-blur-md border-b-4 border-amber-200 sticky top-0 z-30 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="w-12 h-12 bg-amber-400 text-amber-950 rounded-2xl border-2 border-amber-500 shadow-md flex items-center justify-center text-2xl transform -rotate-6">
-                    ⏰
-                </div>
-                <div>
-                    <h1 class="font-extrabold text-2xl text-amber-950 tracking-wide flex items-center gap-1.5">
-                        TimeKeeper <span class="text-xs bg-amber-200 text-amber-800 px-2 py-0.5 rounded-full font-bold">可愛版 ✨</span>
-                    </h1>
-                    <p class="text-xs text-amber-700/80 font-bold">小熊時間管理與任務清單 🐾</p>
-                </div>
-            </div>
-            
-            <div class="flex items-center space-x-4">
-                <!-- 音效開關 -->
-                <button id="soundToggleBtn" onclick="toggleSound()" class="flex items-center space-x-2 px-4 py-2 rounded-2xl text-sm font-bold bg-amber-100 hover:bg-amber-200 border-2 border-amber-300 text-amber-900 transition-all active:scale-95">
-                    <i id="soundIcon" class="fa-solid fa-volume-high text-amber-600 text-base"></i>
-                    <span id="soundText" class="hidden sm:inline">提醒聲: 開啟</span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- 主要內容區：強化的雙欄排版 (左 5 欄 / 右 7 欄) -->
-    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-start">
-        
-        <!-- ================= 左欄：時鐘顯示區 ================= -->
-        <section class="md:col-span-5 flex flex-col gap-6 md:sticky md:top-28">
-            
-            <div class="bg-white border-4 border-amber-300 rounded-[2.5rem] p-6 sm:p-8 cartoon-card flex flex-col items-center justify-center relative overflow-hidden">
-                
-                <!-- 背景可愛裝飾氣泡 -->
-                <div class="absolute -top-10 -left-10 w-32 h-32 bg-amber-100 rounded-full blur-xl pointer-events-none"></div>
-                <div class="absolute -bottom-10 -right-10 w-32 h-32 bg-sky-100 rounded-full blur-xl pointer-events-none"></div>
-
-                <!-- 可愛標頭裝飾 -->
-                <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-100 border border-amber-300 rounded-full text-xs font-bold text-amber-800 mb-2">
-                    <span>🐻 現在時間</span>
-                </div>
-
-                <!-- 模擬時鐘 (精確角度算得，無旋轉偏移) -->
-                <div class="relative w-52 h-52 my-3 flex items-center justify-center bg-sky-50 rounded-full border-4 border-sky-200 shadow-inner p-2">
-                    <svg class="w-full h-full drop-shadow-sm" viewBox="0 0 100 100">
-                        <!-- 鐘面底圈 -->
-                        <circle cx="50" cy="50" r="46" class="clock-face" />
-                        
-                        <!-- 時鐘刻度小圓點 -->
-                        <g fill="#bae6fd">
-                            <circle cx="50" cy="8" r="1.5" />
-                            <circle cx="92" cy="50" r="1.5" />
-                            <circle cx="50" cy="92" r="1.5" />
-                            <circle cx="8" cy="50" r="1.5" />
-                        </g>
-
-                        <!-- 時鐘數字 1 到 12 -->
-                        <g fill="#0284c7" font-size="7.5" font-weight="900" text-anchor="middle" dominant-baseline="central" class="select-none font-sans">
-                            <text x="50" y="15">12</text>
-                            <text x="67.5" y="19.7">1</text>
-                            <text x="80.3" y="32.5">2</text>
-                            <text x="85" y="50">3</text>
-                            <text x="80.3" y="67.5">4</text>
-                            <text x="67.5" y="80.3">5</text>
-                            <text x="50" y="85">6</text>
-                            <text x="32.5" y="80.3">7</text>
-                            <text x="19.7" y="67.5">8</text>
-                            <text x="15" y="50">9</text>
-                            <text x="19.7" y="32.5">10</text>
-                            <text x="32.5" y="19.7">11</text>
-                        </g>
-
-                        <!-- 指針 (預設 12 點方向) -->
-                        <line id="hourHand" class="hand hour-hand" x1="50" y1="50" x2="50" y2="28" />
-                        <line id="minuteHand" class="hand minute-hand" x1="50" y1="50" x2="50" y2="18" />
-                        <line id="secondHand" class="hand second-hand" x1="50" y1="50" x2="50" y2="12" />
-                        <!-- 中心軸點 (可愛黃色大圓點) -->
-                        <circle cx="50" cy="50" r="4.5" fill="#f59e0b" stroke="#ffffff" stroke-width="1.5" />
-                    </svg>
-                </div>
-
-                <!-- 數位時間 -->
-                <div class="text-center mt-2">
-                    <div id="digitalTime" class="text-4xl sm:text-5xl font-black tracking-wider text-sky-600 digital-glow-bright font-mono">
-                        00:00:00
-                    </div>
-                    <div id="dateDisplay" class="text-amber-900/80 text-sm sm:text-base font-bold mt-2 bg-amber-100/70 px-4 py-1 rounded-full inline-block border border-amber-200">
-                        載入日期中...
-                    </div>
-                </div>
-
-            </div>
-
-        </section>
-
-        <!-- ================= 右欄：任務清單區 ================= -->
-        <section class="md:col-span-7 flex flex-col gap-6">
-            
-            <div class="bg-white border-4 border-sky-200 rounded-[2.5rem] p-6 sm:p-7 cartoon-card-blue flex flex-col min-h-[500px]">
-                
-                <!-- 清單頁籤標頭與組別管理 -->
-                <div class="flex flex-col gap-4 pb-4 border-b-2 border-dashed border-sky-200">
-                    
-                    <!-- 上層：標題與任務清單選單 -->
-                    <div class="flex flex-wrap items-center justify-between gap-3">
-                        <div class="flex items-center space-x-2">
-                            <h2 class="text-xl font-black text-slate-800 flex items-center space-x-1.5">
-                                <span>📝 任務清單</span>
-                            </h2>
-                            <!-- 多任務清單選單 -->
-                            <select id="taskListSelector" onchange="switchTaskList(this.value)" 
-                                class="bg-amber-100 border-2 border-amber-300 text-amber-950 rounded-2xl px-3 py-1.5 font-black text-xs sm:text-sm focus:outline-none focus:border-amber-500 cursor-pointer">
-                                <!-- 動態載入清單組選項 -->
-                            </select>
-                        </div>
-
-                        <!-- 任務組別管理按鈕組 -->
-                        <div class="flex items-center gap-2">
-                            <button onclick="openAddListModal()" title="新增清單組" 
-                                class="px-3 py-1.5 bg-sky-100 hover:bg-sky-200 text-sky-800 border-2 border-sky-300 rounded-xl text-xs font-black transition active:scale-95 flex items-center gap-1">
-                                <i class="fa-solid fa-folder-plus"></i>
-                                <span class="hidden sm:inline">新增清單</span>
-                            </button>
-                            <button onclick="confirmDeleteCurrentList()" title="刪除當前清單組" 
-                                class="p-1.5 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-xl transition active:scale-90">
-                                <i class="fa-solid fa-trash-can text-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- 下層：新增任務按鈕與篩選器 -->
-                    <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
-                        <!-- 新增任務彈窗觸發按鈕 -->
-                        <button onclick="openAddTaskModal()" class="px-4 py-2 bg-amber-400 hover:bg-amber-300 text-amber-950 border-2 border-amber-600 rounded-2xl text-xs sm:text-sm font-black btn-cartoon flex items-center space-x-1.5">
-                            <i class="fa-solid fa-plus text-sm"></i>
-                            <span>新增任務</span>
-                        </button>
-
-                        <!-- 篩選按鈕 -->
-                        <div class="flex bg-sky-50 p-1.5 rounded-2xl border-2 border-sky-200 text-xs sm:text-sm font-bold w-full sm:w-auto justify-around sm:justify-start">
-                            <button onclick="setFilter('all')" id="filterAll" class="px-3.5 py-1.5 rounded-xl transition-all">全部</button>
-                            <button onclick="setFilter('pending')" id="filterPending" class="px-3.5 py-1.5 rounded-xl transition-all">進行中</button>
-                            <button onclick="setFilter('completed')" id="filterCompleted" class="px-3.5 py-1.5 rounded-xl transition-all">已完成</button>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- 事項卡片容器 (自訂可愛捲軸) -->
-                <div id="taskList" class="mt-4 space-y-4 flex-1 overflow-y-auto max-h-[55vh] sm:max-h-[580px] pr-1.5">
-                    <!-- 動態生成事項 -->
-                </div>
-
-                <!-- 無資料提示 -->
-                <div id="emptyState" class="hidden flex-1 flex flex-col items-center justify-center py-12 text-center">
-                    <div class="w-20 h-20 rounded-full bg-sky-100 border-2 border-sky-300 flex items-center justify-center text-sky-500 mb-3 text-3xl shadow-inner">
-                        🎈
-                    </div>
-                    <p class="text-slate-700 text-lg font-black">目前此清單沒有任何任務喔！</p>
-                    <p class="text-slate-500 text-xs sm:text-sm font-bold mt-1">點擊上方「+ 新增任務」建立新任務 ✨</p>
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-    <!-- ================= 新增任務組別 Modal ================= -->
-    <div id="addListModal" onclick="handleAddListModalBackdropClick(event)" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden p-4 transition-opacity duration-300">
-        <div class="bg-white border-4 border-sky-300 rounded-[2.5rem] p-6 sm:p-8 max-w-sm w-full shadow-2xl relative cartoon-card-blue">
-            <div class="flex items-center justify-between pb-3 border-b-2 border-dashed border-sky-200 mb-4">
-                <h2 class="text-lg font-black text-sky-950 flex items-center space-x-2">
-                    <span>📁 新增任務清單組</span>
-                </h2>
-                <button type="button" onclick="closeAddListModal()" class="w-8 h-8 rounded-full bg-sky-100 hover:bg-sky-200 border border-sky-300 text-sky-800 flex items-center justify-center font-bold transition">
-                    <i class="fa-solid fa-xmark text-sm"></i>
-                </button>
-            </div>
-            <form onsubmit="handleCreateNewList(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-black text-slate-700 mb-1">清單名稱</label>
-                    <input type="text" id="newListNameInput" required placeholder="例如：🎯 運動健身、📖 讀書計畫..." 
-                        class="w-full px-4 py-2.5 rounded-2xl bg-sky-50 border-2 border-sky-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-sky-400 font-bold transition-all text-sm">
-                </div>
-                <div class="flex space-x-2 pt-2">
-                    <button type="button" onclick="closeAddListModal()" class="w-1/3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-black rounded-xl text-xs transition">取消</button>
-                    <button type="submit" class="w-2/3 py-2 bg-sky-400 hover:bg-sky-300 text-white font-black rounded-xl border-2 border-sky-600 btn-cartoon-blue text-xs transition">確認建立</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- ================= 新增事項彈出對話框 (Modal) ================= -->
-    <div id="addTaskModal" onclick="handleModalBackdropClick(event)" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden p-4 transition-opacity duration-300">
-        <div class="bg-white border-4 border-amber-300 rounded-[2.5rem] p-6 sm:p-8 max-w-md w-full shadow-2xl relative transform transition-all scale-100 cartoon-card">
-            <!-- 對話框標頭與關閉按鈕 -->
-            <div class="flex items-center justify-between pb-4 border-b-2 border-dashed border-amber-200 mb-5">
-                <h2 class="text-xl font-black text-amber-950 flex items-center space-x-2">
-                    <span>✨ 新增任務</span>
-                </h2>
-                <button type="button" onclick="closeAddTaskModal()" class="w-9 h-9 rounded-full bg-amber-100 hover:bg-amber-200 border border-amber-300 text-amber-800 flex items-center justify-center font-bold transition">
-                    <i class="fa-solid fa-xmark text-base"></i>
-                </button>
-            </div>
-
-            <!-- 對話框表單 (時間最小單位設定至分 HH:mm) -->
-            <form id="taskForm" onsubmit="handleAddTask(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs sm:text-sm font-black text-slate-700 mb-1.5">📌 任務名稱</label>
-                    <input type="text" id="taskTitle" required placeholder="例如：寫功課、跑步健身、會議預備..." 
-                        class="w-full px-4 py-3 rounded-2xl bg-amber-50/60 border-2 border-amber-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-amber-400 focus:bg-white font-bold transition-all text-sm sm:text-base">
-                </div>
-
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs sm:text-sm font-black text-slate-700 mb-1.5">⏰ 開始時間</label>
-                        <input type="time" id="taskStartTime" required 
-                            class="w-full px-3 py-2.5 rounded-2xl bg-amber-50/60 border-2 border-amber-200 text-slate-800 focus:outline-none focus:border-amber-400 focus:bg-white font-mono font-bold transition-all text-sm sm:text-base">
-                    </div>
-
-                    <div>
-                        <label class="block text-xs sm:text-sm font-black text-slate-700 mb-1.5">🏁 結束時間</label>
-                        <input type="time" id="taskEndTime" required 
-                            class="w-full px-3 py-2.5 rounded-2xl bg-amber-50/60 border-2 border-amber-200 text-slate-800 focus:outline-none focus:border-amber-400 focus:bg-white font-mono font-bold transition-all text-sm sm:text-base">
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-xs sm:text-sm font-black text-slate-700 mb-1.5">⚡ 快速新增分鐘</label>
-                    <div class="grid grid-cols-4 gap-2">
-                        <button type="button" onclick="addMinutesToInput(1)" class="py-2 bg-sky-100 hover:bg-sky-200 text-sky-800 rounded-xl text-xs sm:text-sm font-black border border-sky-300 transition active:scale-95">+1分</button>
-                        <button type="button" onclick="addMinutesToInput(5)" class="py-2 bg-sky-100 hover:bg-sky-200 text-sky-800 rounded-xl text-xs sm:text-sm font-black border border-sky-300 transition active:scale-95">+5分</button>
-                        <button type="button" onclick="addMinutesToInput(15)" class="py-2 bg-sky-100 hover:bg-sky-200 text-sky-800 rounded-xl text-xs sm:text-sm font-black border border-sky-300 transition active:scale-95">+15分</button>
-                        <button type="button" onclick="addMinutesToInput(30)" class="py-2 bg-sky-100 hover:bg-sky-200 text-sky-800 rounded-xl text-xs sm:text-sm font-black border border-sky-300 transition active:scale-95">+30分</button>
-                    </div>
-                </div>
-
-                <div class="pt-3 flex items-center space-x-3">
-                    <button type="button" onclick="closeAddTaskModal()" class="w-1/3 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-black rounded-2xl border border-slate-300 transition text-sm sm:text-base">
-                        取消
-                    </button>
-                    <button type="submit" 
-                        class="w-2/3 py-3 bg-amber-400 hover:bg-amber-300 text-amber-950 font-black rounded-2xl border-2 border-amber-600 btn-cartoon transition-all text-sm sm:text-base flex items-center justify-center space-x-2">
-                        <i class="fa-solid fa-check text-base"></i>
-                        <span>確認新增任務</span>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <script>
-        // 全域變數宣告
-        var tasks = [];
-        var soundEnabled = true;
-        var audioCtx = null;
-        var currentFilter = 'all';
-        var taskLists = {};
-        var currentListId = 'default';
-        var lastAlarmSecond = -1;
-
-        // 頁面載入完成初始化
-        window.onload = function() {
-            loadTasksFromStorage();
-            setDefaultTimeInput();
-            
-            // 啟動主時鐘循環 (每 500ms 更新一次畫面)
-            setInterval(updateClockAndCheckTasks, 500);
-            updateClockAndCheckTasks();
-
-            // 支援 Esc 鍵關閉彈窗
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    closeAddTaskModal();
-                    closeAddListModal();
-                }
-            });
-        };
-
-        // 設定預設輸入時間 (開始時間為現在時間，結束時間為 30 分鐘後)
-        function setDefaultTimeInput() {
-            const now = new Date();
-            const pad = (n) => String(n).padStart(2, '0');
-            const startTimeStr = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
-            
-            const endDate = new Date(now.getTime() + 30 * 60000);
-            const endTimeStr = `${pad(endDate.getHours())}:${pad(endDate.getMinutes())}`;
-
-            const startInput = document.getElementById('taskStartTime');
-            const endInput = document.getElementById('taskEndTime');
-            if (startInput) startInput.value = startTimeStr;
-            if (endInput) endInput.value = endTimeStr;
-        }
-
-        // 快速新增幾分鐘到結束時間
-        function addMinutesToInput(mins) {
-            const startInput = document.getElementById('taskStartTime');
-            const endInput = document.getElementById('taskEndTime');
-            if (!startInput || !endInput) return;
-
-            let baseDate = new Date();
-            if (startInput.value) {
-                const [h, m] = startInput.value.split(':').map(Number);
-                if (!isNaN(h) && !isNaN(m)) {
-                    baseDate.setHours(h, m, 0, 0);
-                }
-            }
-
-            const newEndDate = new Date(baseDate.getTime() + mins * 60000);
-            const pad = (n) => String(n).padStart(2, '0');
-            endInput.value = `${pad(newEndDate.getHours())}:${pad(newEndDate.getMinutes())}`;
-        }
-
-        // 新增任務 Modal 控制
-        function openAddTaskModal() {
-            setDefaultTimeInput();
-            const modal = document.getElementById('addTaskModal');
-            if (modal) {
-                modal.classList.remove('hidden');
-                setTimeout(() => {
-                    const titleInput = document.getElementById('taskTitle');
-                    if (titleInput) titleInput.focus();
-                }, 100);
-            }
-        }
-
-        function closeAddTaskModal() {
-            const modal = document.getElementById('addTaskModal');
-            if (modal) modal.classList.add('hidden');
-        }
-
-        function handleModalBackdropClick(event) {
-            if (event.target.id === 'addTaskModal') closeAddTaskModal();
-        }
-
-        function handleAddTask(event) {
-            event.preventDefault();
-            const titleInput = document.getElementById('taskTitle');
-            const startInput = document.getElementById('taskStartTime');
-            const endInput = document.getElementById('taskEndTime');
-
-            if (!titleInput || !startInput || !endInput) return;
-
-            const title = titleInput.value.trim();
-            const startTime = startInput.value;
-            const endTime = endInput.value;
-
-            if (!title || !startTime || !endTime) return;
-
-            const newTask = {
-                id: 'task_' + Date.now(),
-                title: title,
-                startTime: startTime,
-                endTime: endTime,
-                completed: false,
-                isAlarm: false,
-                stopped: false,
-                createdAt: new Date().toISOString()
-            };
-
-            if (!Array.isArray(tasks)) tasks = [];
-            tasks.push(newTask);
-            saveTasksToStorage();
-            renderTasks();
-            closeAddTaskModal();
-            titleInput.value = '';
-        }
-
-        // 任務狀態操作：標記完成、關閉警報、刪除
-        function toggleComplete(id) {
-            if (!Array.isArray(tasks)) return;
-            const task = tasks.find(t => t.id === id);
-            if (task) {
-                task.completed = !task.completed;
-                if (task.completed) task.isAlarm = false;
-                saveTasksToStorage();
-                renderTasks();
-            }
-        }
-
-        function stopAlarm(id) {
-            if (!Array.isArray(tasks)) return;
-            const task = tasks.find(t => t.id === id);
-            if (task) {
-                task.stopped = true;
-                task.isAlarm = false;
-                saveTasksToStorage();
-                renderTasks();
-            }
-        }
-
-        function deleteTask(id) {
-            if (!Array.isArray(tasks)) return;
-            tasks = tasks.filter(t => t.id !== id);
-            saveTasksToStorage();
-            renderTasks();
-        }
-
-        // 音效控制 (Web Audio API)
-        function toggleSound() {
-            soundEnabled = !soundEnabled;
-            const icon = document.getElementById('soundIcon');
-            const text = document.getElementById('soundText');
-            if (icon) {
-                icon.className = soundEnabled 
-                    ? "fa-solid fa-volume-high text-amber-600 text-base" 
-                    : "fa-solid fa-volume-xmark text-slate-400 text-base";
-            }
-            if (text) {
-                text.textContent = soundEnabled ? "提醒聲: 開啟" : "提醒聲: 關閉";
-            }
-        }
-
-        function playSound() {
-            if (!soundEnabled) return;
-            try {
-                if (!audioCtx) {
-                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                }
-                if (audioCtx.state === 'suspended') {
-                    audioCtx.resume();
-                }
-
-                const now = audioCtx.currentTime;
-                
-                // 可愛雙音律蜂鳴聲
-                const osc1 = audioCtx.createOscillator();
-                const gain1 = audioCtx.createGain();
-                osc1.type = 'sine';
-                osc1.frequency.setValueAtTime(880, now); // A5
-                gain1.gain.setValueAtTime(0.15, now);
-                gain1.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
-                osc1.connect(gain1);
-                gain1.connect(audioCtx.destination);
-                osc1.start(now);
-                osc1.stop(now + 0.15);
-
-                const osc2 = audioCtx.createOscillator();
-                const gain2 = audioCtx.createGain();
-                osc2.type = 'sine';
-                osc2.frequency.setValueAtTime(1320, now + 0.15); // E6
-                gain2.gain.setValueAtTime(0.2, now + 0.15);
-                gain2.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
-                osc2.connect(gain2);
-                gain2.connect(audioCtx.destination);
-                osc2.start(now + 0.15);
-                osc2.stop(now + 0.35);
-
-            } catch (e) {
-                console.warn('Audio play error:', e);
-            }
-        }
-
-        // 時鐘更新與任務警報檢查
-        function updateClockAndCheckTasks() {
-            const now = new Date();
-            
-            // 1. 數位時間更新
-            const pad = (n) => String(n).padStart(2, '0');
-            const h = pad(now.getHours());
-            const m = pad(now.getMinutes());
-            const s = pad(now.getSeconds());
-            
-            const digitalTime = document.getElementById('digitalTime');
-            if (digitalTime) digitalTime.textContent = `${h}:${m}:${s}`;
-
-            // 2. 日期更新
-            const days = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
-            const dateStr = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日 ${days[now.getDay()]}`;
-            const dateDisplay = document.getElementById('dateDisplay');
-            if (dateDisplay) dateDisplay.textContent = dateStr;
-
-            // 3. 模擬指針角度更新
-            const seconds = now.getSeconds();
-            const minutes = now.getMinutes();
-            const hours = now.getHours();
-
-            const secDeg = (seconds / 60) * 360;
-            const minDeg = ((minutes + seconds / 60) / 60) * 360;
-            const hourDeg = (((hours % 12) + minutes / 60) / 12) * 360;
-
-            const secondHand = document.getElementById('secondHand');
-            const minuteHand = document.getElementById('minuteHand');
-            const hourHand = document.getElementById('hourHand');
-
-            if (secondHand) secondHand.style.transform = `rotate(${secDeg}deg)`;
-            if (minuteHand) minuteHand.style.transform = `rotate(${minDeg}deg)`;
-            if (hourHand) hourHand.style.transform = `rotate(${hourDeg}deg)`;
-
-            // 4. 檢查任務警報 (僅在進行中且距離結束前 5 秒至 0 秒發出警報，時間一到立即停止)
-            let alarmTriggered = false;
-            const curTotalSec = hours * 3600 + minutes * 60 + seconds;
-
-            if (Array.isArray(tasks)) {
-                tasks.forEach(task => {
-                    if (task.completed || task.stopped) {
-                        task.isAlarm = false;
-                        return;
-                    }
-
-                    const [eH = 0, eM = 0] = (task.endTime || "00:00").split(':').map(Number);
-                    const [sH = 0, sM = 0] = (task.startTime || "00:00").split(':').map(Number);
-                    const startTotalSec = sH * 3600 + sM * 60;
-                    const endTotalSec = eH * 3600 + eM * 60;
-
-                    const diffToEnd = endTotalSec - curTotalSec;
-                    
-                    // 僅在倒數 5 秒內 (5 秒 ~ 0 秒) 觸發警報
-                    if (curTotalSec >= startTotalSec && diffToEnd <= 5 && diffToEnd >= 0) {
-                        task.isAlarm = true;
-                        alarmTriggered = true;
-                    } else {
-                        // 時間到達或不在 5 秒倒數區間，立即關閉警報狀態與響鈴
-                        task.isAlarm = false;
-                    }
-                });
-            }
-
-            // 當秒數改變且處於倒數 5 秒內時響鈴，時間一到 (diffToEnd < 0) 自動停止響鈴
-            if (alarmTriggered) {
-                if (lastAlarmSecond !== seconds) {
-                    lastAlarmSecond = seconds;
-                    playSound();
-                }
-            } else {
-                lastAlarmSecond = -1;
-            }
-
-            // 重新渲染任務卡片 (更新倒數秒數與亮燈動態)
-            renderTasks();
-        }
-
-        // ================= 清單組別 Modal 操控 =================
-        function openAddListModal() {
-            const modal = document.getElementById('addListModal');
-            document.getElementById('newListNameInput').value = '';
-            modal.classList.remove('hidden');
-            setTimeout(() => document.getElementById('newListNameInput').focus(), 100);
-        }
-
-        function closeAddListModal() {
-            document.getElementById('addListModal').classList.add('hidden');
-        }
-
-        function handleAddListModalBackdropClick(event) {
-            if (event.target.id === 'addListModal') closeAddListModal();
-        }
-
-        function handleCreateNewList(e) {
-            e.preventDefault();
-            const input = document.getElementById('newListNameInput');
-            const name = input.value.trim();
-            if (!name) return;
-
-            const newId = 'list_' + Date.now();
-            taskLists[newId] = {
-                name: name,
-                tasks: []
-            };
-
-            currentListId = newId;
-            tasks = taskLists[currentListId].tasks;
-            saveTasksToStorage();
-            updateTaskListSelectorUI();
-            renderTasks();
-            closeAddListModal();
-        }
-
-        function switchTaskList(listId) {
-            if (!taskLists[listId]) return;
-            currentListId = listId;
-            tasks = taskLists[currentListId].tasks || [];
-            saveTasksToStorage();
-            renderTasks();
-        }
-
-        function confirmDeleteCurrentList() {
-            const listKeys = Object.keys(taskLists);
-            if (listKeys.length <= 1) {
-                // 如果只剩最後一個清單，清空任務內容
-                tasks = [];
-                taskLists[currentListId].tasks = [];
-                saveTasksToStorage();
-                renderTasks();
-                return;
-            }
-
-            delete taskLists[currentListId];
-            currentListId = Object.keys(taskLists)[0];
-            tasks = taskLists[currentListId].tasks || [];
-            saveTasksToStorage();
-            updateTaskListSelectorUI();
-            renderTasks();
-        }
-
-        function updateTaskListSelectorUI() {
-            const selector = document.getElementById('taskListSelector');
-            if (!selector) return;
-
-            selector.innerHTML = '';
-            Object.keys(taskLists).forEach(id => {
-                const option = document.createElement('option');
-                option.value = id;
-                option.textContent = taskLists[id].name;
-                if (id === currentListId) option.selected = true;
-                selector.appendChild(option);
-            });
-        }
-
-        function setFilter(filter) {
-            currentFilter = filter;
-            updateFilterButtons();
-            renderTasks();
-        }
-
-        function updateFilterButtons() {
-            const btnAll = document.getElementById('filterAll');
-            const btnPending = document.getElementById('filterPending');
-            const btnCompleted = document.getElementById('filterCompleted');
-
-            const activeClass = "bg-sky-500 text-white shadow-sm font-black";
-            const inactiveClass = "text-slate-600 hover:text-sky-600 font-bold";
-
-            btnAll.className = `px-3.5 py-1.5 rounded-xl transition-all ${currentFilter === 'all' ? activeClass : inactiveClass}`;
-            btnPending.className = `px-3.5 py-1.5 rounded-xl transition-all ${currentFilter === 'pending' ? activeClass : inactiveClass}`;
-            btnCompleted.className = `px-3.5 py-1.5 rounded-xl transition-all ${currentFilter === 'completed' ? activeClass : inactiveClass}`;
-        }
-
-        function updateCounts() {
-            if (!Array.isArray(tasks)) tasks = [];
-            const pending = tasks.filter(t => !t.completed).length;
-            const activeAlarms = tasks.filter(t => t.isAlarm && !t.stopped && !t.completed).length;
-
-            const pendingElem = document.getElementById('pendingCount');
-            const alarmElem = document.getElementById('activeAlarmCount');
-            if (pendingElem) pendingElem.textContent = pending;
-            if (alarmElem) alarmElem.textContent = activeAlarms;
-        }
-
-        // ================= 畫面渲染與 DOM 處理 =================
-        function renderTasks() {
-            if (!Array.isArray(tasks)) tasks = [];
-            const container = document.getElementById('taskList');
-            const emptyState = document.getElementById('emptyState');
-            if (!container) return;
-            container.innerHTML = '';
-
-            const now = new Date();
-            const currentTotalSeconds = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
-
-            // 依開始時間排序
-            let sortedTasks = [...tasks].sort((a, b) => {
-                if (a.isAlarm && !b.isAlarm) return -1;
-                if (!a.isAlarm && b.isAlarm) return 1;
-                return (a.startTime || '').localeCompare(b.startTime || '');
-            });
-
-            // 根據頁籤過濾
-            let filteredTasks = sortedTasks.filter(task => {
-                if (currentFilter === 'pending') return !task.completed;
-                if (currentFilter === 'completed') return task.completed;
-                return true;
-            });
-
-            if (filteredTasks.length === 0) {
-                emptyState.classList.remove('hidden');
-            } else {
-                emptyState.classList.add('hidden');
-            }
-
-            filteredTasks.forEach(task => {
-                const card = document.createElement('div');
-                const [sH = 0, sM = 0] = (task.startTime || "00:00").split(':').map(Number);
-                const [eH = 0, eM = 0] = (task.endTime || "00:00").split(':').map(Number);
-                
-                const startTotalSec = sH * 3600 + sM * 60;
-                const endTotalSec = eH * 3600 + eM * 60;
-
-                const inRange = currentTotalSeconds >= startTotalSec && currentTotalSeconds <= endTotalSec;
-                const diffToEnd = endTotalSec - currentTotalSeconds;
-                
-                // 卡片基礎樣式
-                let cardClasses = "p-4 sm:p-5 rounded-3xl border-3 transition-all duration-300 flex items-center justify-between gap-4 ";
-                
-                if (task.completed) {
-                    // 已完成狀態 (灰暗/淡色)
-                    cardClasses += "bg-slate-100/80 border-slate-200 text-slate-400 opacity-70";
-                } else if (task.isAlarm && !task.stopped) {
-                    // 結束前 5 秒：粉紅彈跳閃爍警報
-                    cardClasses += "alarm-flashing bg-rose-100 border-4 border-rose-500 text-rose-950";
-                } else if (inRange) {
-                    // 進行中：質感萌綠
-                    cardClasses += "bg-emerald-50/90 border-3 border-emerald-300 hover:border-emerald-400 text-slate-800 shadow-sm shadow-emerald-100";
-                } else {
-                    // 不在時間區間內 (未開始或已結束)：灰色/柔和底色
-                    cardClasses += "bg-white border-2 border-slate-200 text-slate-600";
-                }
-
-                card.className = cardClasses;
-
-                // 格式化時間僅顯示至分鐘 (HH:mm)
-                const formatTimeStr = (t) => {
-                    if (!t) return "00:00";
-                    const parts = t.split(':');
-                    return `${parts[0].padStart(2, '0')}:${parts[1].padStart(2, '0')}`;
-                };
-
-                const formattedStart = formatTimeStr(task.startTime);
-                const formattedEnd = formatTimeStr(task.endTime);
-
-                // 狀態標籤判斷
-                let badgeHtml = '';
-                if (task.completed) {
-                    badgeHtml = `<span class="px-3 py-1 rounded-full text-xs font-black bg-slate-200 text-slate-500">✓ 已完成</span>`;
-                } else if (task.isAlarm && !task.stopped) {
-                    if (diffToEnd >= 0) {
-                        badgeHtml = `<span class="px-3 py-1 rounded-full text-xs font-black bg-rose-500 text-white animate-pulse">⏰ 剩餘 ${diffToEnd} 秒！</span>`;
-                    } else {
-                        badgeHtml = `<span class="px-3 py-1 rounded-full text-xs font-black bg-rose-600 text-white animate-pulse">📢 時間已到！</span>`;
-                    }
-                } else if (inRange) {
-                    badgeHtml = `<span class="px-3 py-1 rounded-full text-xs font-black bg-emerald-200 text-emerald-800 border border-emerald-300">🌿 進行中</span>`;
-                } else {
-                    const isUpcoming = currentTotalSeconds < startTotalSec;
-                    badgeHtml = `<span class="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-500 border border-slate-200">${isUpcoming ? '💤 未開始' : '☁️ 非進行中'}</span>`;
-                }
-
-                const timeColorClass = task.completed 
-                    ? 'text-slate-400' 
-                    : (task.isAlarm && !task.stopped ? 'text-rose-700' : (inRange ? 'text-emerald-700' : 'text-slate-500'));
-
-                card.innerHTML = `
-                    <div class="flex items-center space-x-3.5 min-w-0 flex-1">
-                        <!-- 完成勾選按鈕 -->
-                        <button onclick="toggleComplete('${task.id}')" 
-                            class="w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all flex-shrink-0 active:scale-90 ${
-                                task.completed 
-                                ? 'bg-emerald-400 border-emerald-500 text-white shadow-sm' 
-                                : 'bg-white border-amber-300 hover:border-emerald-400 text-transparent'
-                            }">
-                            <i class="fa-solid fa-check text-sm font-black"></i>
-                        </button>
-
-                        <div class="min-w-0 flex-1">
-                            <div class="flex items-center space-x-2 flex-wrap gap-y-1">
-                                <!-- 加大時間字型 -->
-                                <span class="font-mono text-sm sm:text-base font-black ${timeColorClass}">
-                                    <i class="fa-regular fa-clock mr-1"></i>${formattedStart} ~ ${formattedEnd}
-                                </span>
-                                ${badgeHtml}
-                            </div>
-                            <!-- 顯著加大任務標題字型 -->
-                            <h3 class="text-lg sm:text-2xl font-black mt-1.5 truncate ${task.completed ? 'line-through text-slate-400' : 'text-slate-800'}">
-                                ${escapeHtml(task.title)}
-                            </h3>
-                        </div>
-                    </div>
-
-                    <!-- 操作功能按鈕 -->
-                    <div class="flex items-center space-x-2 flex-shrink-0">
-                        ${task.isAlarm && !task.stopped && !task.completed ? `
-                            <button onclick="stopAlarm('${task.id}')" title="關閉警報" 
-                                class="px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white text-xs sm:text-sm font-black rounded-xl border border-rose-700 shadow-sm transition active:scale-95 flex items-center space-x-1">
-                                <i class="fa-solid fa-bell-slash"></i>
-                                <span class="hidden sm:inline">關閉警報</span>
-                            </button>
-                        ` : ''}
-
-                        <button onclick="deleteTask('${task.id}')" title="刪除事項" 
-                            class="p-2.5 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-2xl transition active:scale-90">
-                            <i class="fa-solid fa-trash-can text-base"></i>
-                        </button>
-                    </div>
-                `;
-
-                container.appendChild(card);
-            });
-
-            updateCounts();
-        }
-
-        // ================= LocalStorage 本地儲存 =================
-        function saveTasksToStorage() {
-            if (!Array.isArray(tasks)) tasks = [];
-            if (!taskLists[currentListId]) {
-                taskLists[currentListId] = { name: '🌟 預設任務組', tasks: [] };
-            }
-            taskLists[currentListId].tasks = tasks;
-
-            localStorage.setItem('timekeeper_task_lists', JSON.stringify(taskLists));
-            localStorage.setItem('timekeeper_current_list_id', currentListId);
-        }
-
-        function loadTasksFromStorage() {
-            const savedLists = localStorage.getItem('timekeeper_task_lists');
-            const savedCurrentId = localStorage.getItem('timekeeper_current_list_id');
-
-            if (savedLists) {
-                try {
-                    taskLists = JSON.parse(savedLists) || {};
-                } catch(e) {
-                    taskLists = {};
-                }
-            }
-
-            // 若完全無資料，初始化預設組別
-            if (Object.keys(taskLists).length === 0) {
-                const oldSaved = localStorage.getItem('timekeeper_tasks');
-                let oldTasks = [];
-                if (oldSaved) {
-                    try { oldTasks = JSON.parse(oldSaved) || []; } catch(e) {}
-                }
-
-                taskLists = {
-                    'default': { name: '🌟 預設任務組', tasks: oldTasks }
-                };
-            }
-
-            currentListId = (savedCurrentId && taskLists[savedCurrentId]) ? savedCurrentId : Object.keys(taskLists)[0];
-            tasks = taskLists[currentListId]?.tasks || [];
-
-            updateTaskListSelectorUI();
-        }
-
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-    </script>
+    <!-- 頂部導覽列 -->
+    <header class="bg-white/90 backdrop-blur-md border-b-4 border-amber-200 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 bg-amber-400 text-amber-950 rounded-2xl border-2 border-amber-500 shadow-md flex items-center justify-center text-2xl transform -rotate-6">
+                    ⏰
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-2xl text-amber-950 tracking-wide flex items-center gap-1.5">
+                        TimeKeeper <span class="text-xs bg-amber-200 text-amber-800 px-2 py-0.5 rounded-full font-bold">可愛版 ✨</span>
+                    </h1>
+                    <p class="text-xs text-amber-700/80 font-bold">小熊時間管理與任務清單 🐾</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <!-- 音效開關 -->
+                <button id="soundToggleBtn" onclick="toggleSound()" class="flex items-center space-x-2 px-4 py-2 rounded-2xl text-sm font-bold bg-amber-100 hover:bg-amber-200 border-2 border-amber-300 text-amber-900 transition-all active:scale-95">
+                    <i id="soundIcon" class="fa-solid fa-volume-high text-amber-600 text-base"></i>
+                    <span id="soundText" class="hidden sm:inline">提醒聲: 開啟</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要內容區：強化的雙欄排版 (左 5 欄 / 右 7 欄) -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-start">
+        
+        <!-- ================= 左欄：時鐘顯示區 ================= -->
+        <section class="md:col-span-5 flex flex-col gap-6 md:sticky md:top-28">
+            
+            <div class="bg-white border-4 border-amber-300 rounded-[2.5rem] p-6 sm:p-8 cartoon-card flex flex-col items-center justify-center relative overflow-hidden">
+                
+                <!-- 背景可愛裝飾氣泡 -->
+                <div class="absolute -top-10 -left-10 w-32 h-32 bg-amber-100 rounded-full blur-xl pointer-events-none"></div>
+                <div class="absolute -bottom-10 -right-10 w-32 h-32 bg-sky-100 rounded-full blur-xl pointer-events-none"></div>
+
+                <!-- 可愛標頭裝飾 -->
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-100 border border-amber-300 rounded-full text-xs font-bold text-amber-800 mb-2">
+                    <span>🐻 現在時間</span>
+                </div>
+
+                <!-- 模擬時鐘 (精確角度算得，無旋轉偏移) -->
+                <div class="relative w-52 h-52 my-3 flex items-center justify-center bg-sky-50 rounded-full border-4 border-sky-200 shadow-inner p-2">
+                    <svg class="w-full h-full drop-shadow-sm" viewBox="0 0 100 100">
+                        <!-- 鐘面底圈 -->
+                        <circle cx="50" cy="50" r="46" class="clock-face" />
+                        
+                        <!-- 時鐘刻度小圓點 -->
+                        <g fill="#bae6fd">
+                            <circle cx="50" cy="8" r="1.5" />
+                            <circle cx="92" cy="50" r="1.5" />
+                            <circle cx="50" cy="92" r="1.5" />
+                            <circle cx="8" cy="50" r="1.5" />
+                        </g>
+
+                        <!-- 時鐘數字 1 到 12 -->
+                        <g fill="#0284c7" font-size="7.5" font-weight="900" text-anchor="middle" dominant-baseline="central" class="select-none font-sans">
+                            <text x="50" y="15">12</text>
+                            <text x="67.5" y="19.7">1</text>
+                            <text x="80.3" y="32.5">2</text>
+                            <text x="85" y="50">3</text>
+                            <text x="80.3" y="67.5">4</text>
+                            <text x="67.5" y="80.3">5</text>
+                            <text x="50" y="85">6</text>
+                            <text x="32.5" y="80.3">7</text>
+                            <text x="19.7" y="67.5">8</text>
+                            <text x="15" y="50">9</text>
+                            <text x="19.7" y="32.5">10</text>
+                            <text x="32.5" y="19.7">11</text>
+                        </g>
+
+                        <!-- 指針 (預設 12 點方向) -->
+                        <line id="hourHand" class="hand hour-hand" x1="50" y1="50" x2="50" y2="28" />
+                        <line id="minuteHand" class="hand minute-hand" x1="50" y1="50" x2="50" y2="18" />
+                        <line id="secondHand" class="hand second-hand" x1="50" y1="50" x2="50" y2="12" />
+                        <!-- 中心軸點 (可愛黃色大圓點) -->
+                        <circle cx="50" cy="50" r="4.5" fill="#f59e0b" stroke="#ffffff" stroke-width="1.5" />
+                    </svg>
+                </div>
+
+                <!-- 數位時間 -->
+                <div class="text-center mt-2">
+                    <div id="digitalTime" class="text-4xl sm:text-5xl font-black tracking-wider text-sky-600 digital-glow-bright font-mono">
+                        00:00:00
+                    </div>
+                    <div id="dateDisplay" class="text-amber-900/80 text-sm sm:text-base font-bold mt-2 bg-amber-100/70 px-4 py-1 rounded-full inline-block border border-amber-200">
+                        載入日期中...
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ================= 右欄：任務清單區 ================= -->
+        <section class="md:col-span-7 flex flex-col gap-6">
+            
+            <div class="bg-white border-4 border-sky-200 rounded-[2.5rem] p-6 sm:p-7 cartoon-card-blue flex flex-col min-h-[500px]">
+                
+                <!-- 清單頁籤標頭與組別管理 -->
+                <div class="flex flex-col gap-4 pb-4 border-b-2 border-dashed border-sky-200">
+                    
+                    <!-- 上層：標題與任務清單選單 -->
+                    <div class="flex flex-wrap items-center justify-between gap-3">
+                        <div class="flex items-center space-x-2">
+                            <h2 class="text-xl font-black text-slate-800 flex items-center space-x-1.5">
+                                <span>📝 任務清單</span>
+                            </h2>
+                            <!-- 多任務清單選單 -->
+                            <select id="taskListSelector" onchange="switchTaskList(this.value)" 
+                                class="bg-amber-100 border-2 border-amber-300 text-amber-950 rounded-2xl px-3 py-1.5 font-black text-xs sm:text-sm focus:outline-none focus:border-amber-500 cursor-pointer">
+                                <!-- 動態載入清單組選項 -->
+                            </select>
+                        </div>
+
+                        <!-- 任務組別管理按鈕組 -->
+                        <div class="flex items-center gap-2">
+                            <button onclick="openAddListModal()" title="新增清單組" 
+                                class="px-3 py-1.5 bg-sky-100 hover:bg-sky-200 text-sky-800 border-2 border-sky-300 rounded-xl text-xs font-black transition active:scale-95 flex items-center gap-1">
+                                <i class="fa-solid fa-folder-plus"></i>
+                                <span class="hidden sm:inline">新增清單</span>
+                            </button>
+                            <button onclick="confirmDeleteCurrentList()" title="刪除當前清單組" 
+                                class="p-1.5 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-xl transition active:scale-90">
+                                <i class="fa-solid fa-trash-can text-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 下層：新增任務按鈕與篩選器 -->
+                    <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+                        <!-- 新增任務彈窗觸發按鈕 -->
+                        <button onclick="openAddTaskModal()" class="px-4 py-2 bg-amber-400 hover:bg-amber-300 text-amber-950 border-2 border-amber-600 rounded-2xl text-xs sm:text-sm font-black btn-cartoon flex items-center space-x-1.5">
+                            <i class="fa-solid fa-plus text-sm"></i>
+                            <span>新增任務</span>
+                        </button>
+
+                        <!-- 篩選按鈕 -->
+                        <div class="flex bg-sky-50 p-1.5 rounded-2xl border-2 border-sky-200 text-xs sm:text-sm font-bold w-full sm:w-auto justify-around sm:justify-start">
+                            <button onclick="setFilter('all')" id="filterAll" class="px-3.5 py-1.5 rounded-xl transition-all">全部</button>
+                            <button onclick="setFilter('pending')" id="filterPending" class="px-3.5 py-1.5 rounded-xl transition-all">進行中</button>
+                            <button onclick="setFilter('completed')" id="filterCompleted" class="px-3.5 py-1.5 rounded-xl transition-all">已完成</button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- 事項卡片容器 (自訂可愛捲軸) -->
+                <div id="taskList" class="mt-4 space-y-4 flex-1 overflow-y-auto max-h-[55vh] sm:max-h-[580px] pr-1.5">
+                    <!-- 動態生成事項 -->
+                </div>
+
+                <!-- 無資料提示 -->
+                <div id="emptyState" class="hidden flex-1 flex flex-col items-center justify-center py-12 text-center">
+                    <div class="w-20 h-20 rounded-full bg-sky-100 border-2 border-sky-300 flex items-center justify-center text-sky-500 mb-3 text-3xl shadow-inner">
+                        🎈
+                    </div>
+                    <p class="text-slate-700 text-lg font-black">目前此清單沒有任何任務喔！</p>
+                    <p class="text-slate-500 text-xs sm:text-sm font-bold mt-1">點擊上方「+ 新增任務」建立新任務 ✨</p>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- ================= 新增任務組別 Modal ================= -->
+    <div id="addListModal" onclick="handleAddListModalBackdropClick(event)" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden p-4 transition-opacity duration-300">
+        <div class="bg-white border-4 border-sky-300 rounded-[2.5rem] p-6 sm:p-8 max-w-sm w-full shadow-2xl relative cartoon-card-blue">
+            <div class="flex items-center justify-between pb-3 border-b-2 border-dashed border-sky-200 mb-4">
+                <h2 class="text-lg font-black text-sky-950 flex items-center space-x-2">
+                    <span>📁 新增任務清單組</span>
+                </h2>
+                <button type="button" onclick="closeAddListModal()" class="w-8 h-8 rounded-full bg-sky-100 hover:bg-sky-200 border border-sky-300 text-sky-800 flex items-center justify-center font-bold transition">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+            <form onsubmit="handleCreateNewList(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-black text-slate-700 mb-1">清單名稱</label>
+                    <input type="text" id="newListNameInput" required placeholder="例如：🎯 運動健身、📖 讀書計畫..." 
+                        class="w-full px-4 py-2.5 rounded-2xl bg-sky-50 border-2 border-sky-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-sky-400 font-bold transition-all text-sm">
+                </div>
+                <div class="flex space-x-2 pt-2">
+                    <button type="button" onclick="closeAddListModal()" class="w-1/3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-black rounded-xl text-xs transition">取消</button>
+                    <button type="submit" class="w-2/3 py-2 bg-sky-400 hover:bg-sky-300 text-white font-black rounded-xl border-2 border-sky-600 btn-cartoon-blue text-xs transition">確認建立</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= 新增事項彈出對話框 (Modal) ================= -->
+    <div id="addTaskModal" onclick="handleModalBackdropClick(event)" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden p-4 transition-opacity duration-300">
+        <div class="bg-white border-4 border-amber-300 rounded-[2.5rem] p-6 sm:p-8 max-w-md w-full shadow-2xl relative transform transition-all scale-100 cartoon-card">
+            <!-- 對話框標頭與關閉按鈕 -->
+            <div class="flex items-center justify-between pb-4 border-b-2 border-dashed border-amber-200 mb-5">
+                <h2 class="text-xl font-black text-amber-950 flex items-center space-x-2">
+                    <span>✨ 新增任務</span>
+                </h2>
+                <button type="button" onclick="closeAddTaskModal()" class="w-9 h-9 rounded-full bg-amber-100 hover:bg-amber-200 border border-amber-300 text-amber-800 flex items-center justify-center font-bold transition">
+                    <i class="fa-solid fa-xmark text-base"></i>
+                </button>
+            </div>
+
+            <!-- 對話框表單 (時間最小單位設定至分 HH:mm) -->
+            <form id="taskForm" onsubmit="handleAddTask(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs sm:text-sm font-black text-slate-700 mb-1.5">📌 任務名稱</label>
+                    <input type="text" id="taskTitle" required placeholder="例如：寫功課、跑步健身、會議預備..." 
+                        class="w-full px-4 py-3 rounded-2xl bg-amber-50/60 border-2 border-amber-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-amber-400 focus:bg-white font-bold transition-all text-sm sm:text-base">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs sm:text-sm font-black text-slate-700 mb-1.5">⏰ 開始時間</label>
+                        <input type="time" id="taskStartTime" required 
+                            class="w-full px-3 py-2.5 rounded-2xl bg-amber-50/60 border-2 border-amber-200 text-slate-800 focus:outline-none focus:border-amber-400 focus:bg-white font-mono font-bold transition-all text-sm sm:text-base">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs sm:text-sm font-black text-slate-700 mb-1.5">🏁 結束時間</label>
+                        <input type="time" id="taskEndTime" required 
+                            class="w-full px-3 py-2.5 rounded-2xl bg-amber-50/60 border-2 border-amber-200 text-slate-800 focus:outline-none focus:border-amber-400 focus:bg-white font-mono font-bold transition-all text-sm sm:text-base">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs sm:text-sm font-black text-slate-700 mb-1.5">⚡ 快速新增分鐘</label>
+                    <div class="grid grid-cols-4 gap-2">
+                        <button type="button" onclick="addMinutesToInput(1)" class="py-2 bg-sky-100 hover:bg-sky-200 text-sky-800 rounded-xl text-xs sm:text-sm font-black border border-sky-300 transition active:scale-95">+1分</button>
+                        <button type="button" onclick="addMinutesToInput(5)" class="py-2 bg-sky-100 hover:bg-sky-200 text-sky-800 rounded-xl text-xs sm:text-sm font-black border border-sky-300 transition active:scale-95">+5分</button>
+                        <button type="button" onclick="addMinutesToInput(15)" class="py-2 bg-sky-100 hover:bg-sky-200 text-sky-800 rounded-xl text-xs sm:text-sm font-black border border-sky-300 transition active:scale-95">+15分</button>
+                        <button type="button" onclick="addMinutesToInput(30)" class="py-2 bg-sky-100 hover:bg-sky-200 text-sky-800 rounded-xl text-xs sm:text-sm font-black border border-sky-300 transition active:scale-95">+30分</button>
+                    </div>
+                </div>
+
+                <div class="pt-3 flex items-center space-x-3">
+                    <button type="button" onclick="closeAddTaskModal()" class="w-1/3 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-black rounded-2xl border border-slate-300 transition text-sm sm:text-base">
+                        取消
+                    </button>
+                    <button type="submit" 
+                        class="w-2/3 py-3 bg-amber-400 hover:bg-amber-300 text-amber-950 font-black rounded-2xl border-2 border-amber-600 btn-cartoon transition-all text-sm sm:text-base flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-check text-base"></i>
+                        <span>確認新增任務</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // 全域變數宣告
+        var tasks = [];
+        var soundEnabled = true;
+        var audioCtx = null;
+        var currentFilter = 'all';
+        var taskLists = {};
+        var currentListId = 'default';
+        var lastAlarmSecond = -1;
+
+        // 頁面載入完成初始化
+        window.onload = function() {
+            loadTasksFromStorage();
+            setDefaultTimeInput();
+            
+            // 啟動主時鐘循環 (每 500ms 更新一次畫面)
+            setInterval(updateClockAndCheckTasks, 500);
+            updateClockAndCheckTasks();
+
+            // 支援 Esc 鍵關閉彈窗
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeAddTaskModal();
+                    closeAddListModal();
+                }
+            });
+        };
+
+        // 設定預設輸入時間 (開始時間為現在時間，結束時間為 30 分鐘後)
+        function setDefaultTimeInput() {
+            const now = new Date();
+            const pad = (n) => String(n).padStart(2, '0');
+            const startTimeStr = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+            
+            const endDate = new Date(now.getTime() + 30 * 60000);
+            const endTimeStr = `${pad(endDate.getHours())}:${pad(endDate.getMinutes())}`;
+
+            const startInput = document.getElementById('taskStartTime');
+            const endInput = document.getElementById('taskEndTime');
+            if (startInput) startInput.value = startTimeStr;
+            if (endInput) endInput.value = endTimeStr;
+        }
+
+        // 快速新增幾分鐘到結束時間
+        function addMinutesToInput(mins) {
+            const startInput = document.getElementById('taskStartTime');
+            const endInput = document.getElementById('taskEndTime');
+            if (!startInput || !endInput) return;
+
+            let baseDate = new Date();
+            if (startInput.value) {
+                const [h, m] = startInput.value.split(':').map(Number);
+                if (!isNaN(h) && !isNaN(m)) {
+                    baseDate.setHours(h, m, 0, 0);
+                }
+            }
+
+            const newEndDate = new Date(baseDate.getTime() + mins * 60000);
+            const pad = (n) => String(n).padStart(2, '0');
+            endInput.value = `${pad(newEndDate.getHours())}:${pad(newEndDate.getMinutes())}`;
+        }
+
+        // 新增任務 Modal 控制
+        function openAddTaskModal() {
+            setDefaultTimeInput();
+            const modal = document.getElementById('addTaskModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    const titleInput = document.getElementById('taskTitle');
+                    if (titleInput) titleInput.focus();
+                }, 100);
+            }
+        }
+
+        function closeAddTaskModal() {
+            const modal = document.getElementById('addTaskModal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function handleModalBackdropClick(event) {
+            if (event.target.id === 'addTaskModal') closeAddTaskModal();
+        }
+
+        function handleAddTask(event) {
+            event.preventDefault();
+            const titleInput = document.getElementById('taskTitle');
+            const startInput = document.getElementById('taskStartTime');
+            const endInput = document.getElementById('taskEndTime');
+
+            if (!titleInput || !startInput || !endInput) return;
+
+            const title = titleInput.value.trim();
+            const startTime = startInput.value;
+            const endTime = endInput.value;
+
+            if (!title || !startTime || !endTime) return;
+
+            const newTask = {
+                id: 'task_' + Date.now(),
+                title: title,
+                startTime: startTime,
+                endTime: endTime,
+                completed: false,
+                isAlarm: false,
+                stopped: false,
+                createdAt: new Date().toISOString()
+            };
+
+            if (!Array.isArray(tasks)) tasks = [];
+            tasks.push(newTask);
+            saveTasksToStorage();
+            renderTasks();
+            closeAddTaskModal();
+            titleInput.value = '';
+        }
+
+        // 任務狀態操作：標記完成、關閉警報、刪除
+        function toggleComplete(id) {
+            if (!Array.isArray(tasks)) return;
+            const task = tasks.find(t => t.id === id);
+            if (task) {
+                task.completed = !task.completed;
+                if (task.completed) task.isAlarm = false;
+                saveTasksToStorage();
+                renderTasks();
+            }
+        }
+
+        function stopAlarm(id) {
+            if (!Array.isArray(tasks)) return;
+            const task = tasks.find(t => t.id === id);
+            if (task) {
+                task.stopped = true;
+                task.isAlarm = false;
+                saveTasksToStorage();
+                renderTasks();
+            }
+        }
+
+        function deleteTask(id) {
+            if (!Array.isArray(tasks)) return;
+            tasks = tasks.filter(t => t.id !== id);
+            saveTasksToStorage();
+            renderTasks();
+        }
+
+        // 音效控制 (Web Audio API)
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const icon = document.getElementById('soundIcon');
+            const text = document.getElementById('soundText');
+            if (icon) {
+                icon.className = soundEnabled 
+                    ? "fa-solid fa-volume-high text-amber-600 text-base" 
+                    : "fa-solid fa-volume-xmark text-slate-400 text-base";
+            }
+            if (text) {
+                text.textContent = soundEnabled ? "提醒聲: 開啟" : "提醒聲: 關閉";
+            }
+        }
+
+        function playSound() {
+            if (!soundEnabled) return;
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+
+                const now = audioCtx.currentTime;
+                
+                // 可愛雙音律蜂鳴聲
+                const osc1 = audioCtx.createOscillator();
+                const gain1 = audioCtx.createGain();
+                osc1.type = 'sine';
+                osc1.frequency.setValueAtTime(880, now); // A5
+                gain1.gain.setValueAtTime(0.15, now);
+                gain1.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+                osc1.connect(gain1);
+                gain1.connect(audioCtx.destination);
+                osc1.start(now);
+                osc1.stop(now + 0.15);
+
+                const osc2 = audioCtx.createOscillator();
+                const gain2 = audioCtx.createGain();
+                osc2.type = 'sine';
+                osc2.frequency.setValueAtTime(1320, now + 0.15); // E6
+                gain2.gain.setValueAtTime(0.2, now + 0.15);
+                gain2.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+                osc2.connect(gain2);
+                gain2.connect(audioCtx.destination);
+                osc2.start(now + 0.15);
+                osc2.stop(now + 0.35);
+
+            } catch (e) {
+                console.warn('Audio play error:', e);
+            }
+        }
+
+        // 時鐘更新與任務警報檢查
+        function updateClockAndCheckTasks() {
+            const now = new Date();
+            
+            // 1. 數位時間更新
+            const pad = (n) => String(n).padStart(2, '0');
+            const h = pad(now.getHours());
+            const m = pad(now.getMinutes());
+            const s = pad(now.getSeconds());
+            
+            const digitalTime = document.getElementById('digitalTime');
+            if (digitalTime) digitalTime.textContent = `${h}:${m}:${s}`;
+
+            // 2. 日期更新
+            const days = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+            const dateStr = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日 ${days[now.getDay()]}`;
+            const dateDisplay = document.getElementById('dateDisplay');
+            if (dateDisplay) dateDisplay.textContent = dateStr;
+
+            // 3. 模擬指針角度更新
+            const seconds = now.getSeconds();
+            const minutes = now.getMinutes();
+            const hours = now.getHours();
+
+            const secDeg = (seconds / 60) * 360;
+            const minDeg = ((minutes + seconds / 60) / 60) * 360;
+            const hourDeg = (((hours % 12) + minutes / 60) / 12) * 360;
+
+            const secondHand = document.getElementById('secondHand');
+            const minuteHand = document.getElementById('minuteHand');
+            const hourHand = document.getElementById('hourHand');
+
+            if (secondHand) secondHand.style.transform = `rotate(${secDeg}deg)`;
+            if (minuteHand) minuteHand.style.transform = `rotate(${minDeg}deg)`;
+            if (hourHand) hourHand.style.transform = `rotate(${hourDeg}deg)`;
+
+            // 4. 檢查任務警報 (僅在進行中且距離結束前 5 秒至 0 秒發出警報，時間一到立即停止)
+            let alarmTriggered = false;
+            const curTotalSec = hours * 3600 + minutes * 60 + seconds;
+
+            if (Array.isArray(tasks)) {
+                tasks.forEach(task => {
+                    if (task.completed || task.stopped) {
+                        task.isAlarm = false;
+                        return;
+                    }
+
+                    const [eH = 0, eM = 0] = (task.endTime || "00:00").split(':').map(Number);
+                    const [sH = 0, sM = 0] = (task.startTime || "00:00").split(':').map(Number);
+                    const startTotalSec = sH * 3600 + sM * 60;
+                    const endTotalSec = eH * 3600 + eM * 60;
+
+                    const diffToEnd = endTotalSec - curTotalSec;
+                    
+                    // 僅在倒數 5 秒內 (5 秒 ~ 0 秒) 觸發警報
+                    if (curTotalSec >= startTotalSec && diffToEnd <= 5 && diffToEnd >= 0) {
+                        task.isAlarm = true;
+                        alarmTriggered = true;
+                    } else {
+                        // 時間到達或不在 5 秒倒數區間，立即關閉警報狀態與響鈴
+                        task.isAlarm = false;
+                    }
+                });
+            }
+
+            // 當秒數改變且處於倒數 5 秒內時響鈴，時間一到 (diffToEnd < 0) 自動停止響鈴
+            if (alarmTriggered) {
+                if (lastAlarmSecond !== seconds) {
+                    lastAlarmSecond = seconds;
+                    playSound();
+                }
+            } else {
+                lastAlarmSecond = -1;
+            }
+
+            // 重新渲染任務卡片 (更新倒數秒數與亮燈動態)
+            renderTasks();
+        }
+
+        // ================= 清單組別 Modal 操控 =================
+        function openAddListModal() {
+            const modal = document.getElementById('addListModal');
+            document.getElementById('newListNameInput').value = '';
+            modal.classList.remove('hidden');
+            setTimeout(() => document.getElementById('newListNameInput').focus(), 100);
+        }
+
+        function closeAddListModal() {
+            document.getElementById('addListModal').classList.add('hidden');
+        }
+
+        function handleAddListModalBackdropClick(event) {
+            if (event.target.id === 'addListModal') closeAddListModal();
+        }
+
+        function handleCreateNewList(e) {
+            e.preventDefault();
+            const input = document.getElementById('newListNameInput');
+            const name = input.value.trim();
+            if (!name) return;
+
+            const newId = 'list_' + Date.now();
+            taskLists[newId] = {
+                name: name,
+                tasks: []
+            };
+
+            currentListId = newId;
+            tasks = taskLists[currentListId].tasks;
+            saveTasksToStorage();
+            updateTaskListSelectorUI();
+            renderTasks();
+            closeAddListModal();
+        }
+
+        function switchTaskList(listId) {
+            if (!taskLists[listId]) return;
+            currentListId = listId;
+            tasks = taskLists[currentListId].tasks || [];
+            saveTasksToStorage();
+            renderTasks();
+        }
+
+        function confirmDeleteCurrentList() {
+            const listKeys = Object.keys(taskLists);
+            if (listKeys.length <= 1) {
+                // 如果只剩最後一個清單，清空任務內容
+                tasks = [];
+                taskLists[currentListId].tasks = [];
+                saveTasksToStorage();
+                renderTasks();
+                return;
+            }
+
+            delete taskLists[currentListId];
+            currentListId = Object.keys(taskLists)[0];
+            tasks = taskLists[currentListId].tasks || [];
+            saveTasksToStorage();
+            updateTaskListSelectorUI();
+            renderTasks();
+        }
+
+        function updateTaskListSelectorUI() {
+            const selector = document.getElementById('taskListSelector');
+            if (!selector) return;
+
+            selector.innerHTML = '';
+            Object.keys(taskLists).forEach(id => {
+                const option = document.createElement('option');
+                option.value = id;
+                option.textContent = taskLists[id].name;
+                if (id === currentListId) option.selected = true;
+                selector.appendChild(option);
+            });
+        }
+
+        function setFilter(filter) {
+            currentFilter = filter;
+            updateFilterButtons();
+            renderTasks();
+        }
+
+        function updateFilterButtons() {
+            const btnAll = document.getElementById('filterAll');
+            const btnPending = document.getElementById('filterPending');
+            const btnCompleted = document.getElementById('filterCompleted');
+
+            const activeClass = "bg-sky-500 text-white shadow-sm font-black";
+            const inactiveClass = "text-slate-600 hover:text-sky-600 font-bold";
+
+            btnAll.className = `px-3.5 py-1.5 rounded-xl transition-all ${currentFilter === 'all' ? activeClass : inactiveClass}`;
+            btnPending.className = `px-3.5 py-1.5 rounded-xl transition-all ${currentFilter === 'pending' ? activeClass : inactiveClass}`;
+            btnCompleted.className = `px-3.5 py-1.5 rounded-xl transition-all ${currentFilter === 'completed' ? activeClass : inactiveClass}`;
+        }
+
+        function updateCounts() {
+            if (!Array.isArray(tasks)) tasks = [];
+            const pending = tasks.filter(t => !t.completed).length;
+            const activeAlarms = tasks.filter(t => t.isAlarm && !t.stopped && !t.completed).length;
+
+            const pendingElem = document.getElementById('pendingCount');
+            const alarmElem = document.getElementById('activeAlarmCount');
+            if (pendingElem) pendingElem.textContent = pending;
+            if (alarmElem) alarmElem.textContent = activeAlarms;
+        }
+
+        // ================= 畫面渲染與 DOM 處理 =================
+        function renderTasks() {
+            if (!Array.isArray(tasks)) tasks = [];
+            const container = document.getElementById('taskList');
+            const emptyState = document.getElementById('emptyState');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const now = new Date();
+            const currentTotalSeconds = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+
+            // 依開始時間排序
+            let sortedTasks = [...tasks].sort((a, b) => {
+                if (a.isAlarm && !b.isAlarm) return -1;
+                if (!a.isAlarm && b.isAlarm) return 1;
+                return (a.startTime || '').localeCompare(b.startTime || '');
+            });
+
+            // 根據頁籤過濾
+            let filteredTasks = sortedTasks.filter(task => {
+                if (currentFilter === 'pending') return !task.completed;
+                if (currentFilter === 'completed') return task.completed;
+                return true;
+            });
+
+            if (filteredTasks.length === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+            }
+
+            filteredTasks.forEach(task => {
+                const card = document.createElement('div');
+                const [sH = 0, sM = 0] = (task.startTime || "00:00").split(':').map(Number);
+                const [eH = 0, eM = 0] = (task.endTime || "00:00").split(':').map(Number);
+                
+                const startTotalSec = sH * 3600 + sM * 60;
+                const endTotalSec = eH * 3600 + eM * 60;
+
+                const inRange = currentTotalSeconds >= startTotalSec && currentTotalSeconds <= endTotalSec;
+                const diffToEnd = endTotalSec - currentTotalSeconds;
+                
+                // 卡片基礎樣式
+                let cardClasses = "p-4 sm:p-5 rounded-3xl border-3 transition-all duration-300 flex items-center justify-between gap-4 ";
+                
+                if (task.completed) {
+                    // 已完成狀態 (灰暗/淡色)
+                    cardClasses += "bg-slate-100/80 border-slate-200 text-slate-400 opacity-70";
+                } else if (task.isAlarm && !task.stopped) {
+                    // 結束前 5 秒：粉紅彈跳閃爍警報
+                    cardClasses += "alarm-flashing bg-rose-100 border-4 border-rose-500 text-rose-950";
+                } else if (inRange) {
+                    // 進行中：質感萌綠
+                    cardClasses += "bg-emerald-50/90 border-3 border-emerald-300 hover:border-emerald-400 text-slate-800 shadow-sm shadow-emerald-100";
+                } else {
+                    // 不在時間區間內 (未開始或已結束)：灰色/柔和底色
+                    cardClasses += "bg-white border-2 border-slate-200 text-slate-600";
+                }
+
+                card.className = cardClasses;
+
+                // 格式化時間僅顯示至分鐘 (HH:mm)
+                const formatTimeStr = (t) => {
+                    if (!t) return "00:00";
+                    const parts = t.split(':');
+                    return `${parts[0].padStart(2, '0')}:${parts[1].padStart(2, '0')}`;
+                };
+
+                const formattedStart = formatTimeStr(task.startTime);
+                const formattedEnd = formatTimeStr(task.endTime);
+
+                // 狀態標籤判斷
+                let badgeHtml = '';
+                if (task.completed) {
+                    badgeHtml = `<span class="px-3 py-1 rounded-full text-xs font-black bg-slate-200 text-slate-500">✓ 已完成</span>`;
+                } else if (task.isAlarm && !task.stopped) {
+                    if (diffToEnd >= 0) {
+                        badgeHtml = `<span class="px-3 py-1 rounded-full text-xs font-black bg-rose-500 text-white animate-pulse">⏰ 剩餘 ${diffToEnd} 秒！</span>`;
+                    } else {
+                        badgeHtml = `<span class="px-3 py-1 rounded-full text-xs font-black bg-rose-600 text-white animate-pulse">📢 時間已到！</span>`;
+                    }
+                } else if (inRange) {
+                    badgeHtml = `<span class="px-3 py-1 rounded-full text-xs font-black bg-emerald-200 text-emerald-800 border border-emerald-300">🌿 進行中</span>`;
+                } else {
+                    const isUpcoming = currentTotalSeconds < startTotalSec;
+                    badgeHtml = `<span class="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-500 border border-slate-200">${isUpcoming ? '💤 未開始' : '☁️ 非進行中'}</span>`;
+                }
+
+                const timeColorClass = task.completed 
+                    ? 'text-slate-400' 
+                    : (task.isAlarm && !task.stopped ? 'text-rose-700' : (inRange ? 'text-emerald-700' : 'text-slate-500'));
+
+                card.innerHTML = `
+                    <div class="flex items-center space-x-3.5 min-w-0 flex-1">
+                        <!-- 完成勾選按鈕 -->
+                        <button onclick="toggleComplete('${task.id}')" 
+                            class="w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all flex-shrink-0 active:scale-90 ${
+                                task.completed 
+                                ? 'bg-emerald-400 border-emerald-500 text-white shadow-sm' 
+                                : 'bg-white border-amber-300 hover:border-emerald-400 text-transparent'
+                            }">
+                            <i class="fa-solid fa-check text-sm font-black"></i>
+                        </button>
+
+                        <div class="min-w-0 flex-1">
+                            <div class="flex items-center space-x-2 flex-wrap gap-y-1">
+                                <!-- 加大時間字型 -->
+                                <span class="font-mono text-sm sm:text-base font-black ${timeColorClass}">
+                                    <i class="fa-regular fa-clock mr-1"></i>${formattedStart} ~ ${formattedEnd}
+                                </span>
+                                ${badgeHtml}
+                            </div>
+                            <!-- 顯著加大任務標題字型 -->
+                            <h3 class="text-lg sm:text-2xl font-black mt-1.5 truncate ${task.completed ? 'line-through text-slate-400' : 'text-slate-800'}">
+                                ${escapeHtml(task.title)}
+                            </h3>
+                        </div>
+                    </div>
+
+                    <!-- 操作功能按鈕 -->
+                    <div class="flex items-center space-x-2 flex-shrink-0">
+                        ${task.isAlarm && !task.stopped && !task.completed ? `
+                            <button onclick="stopAlarm('${task.id}')" title="關閉警報" 
+                                class="px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white text-xs sm:text-sm font-black rounded-xl border border-rose-700 shadow-sm transition active:scale-95 flex items-center space-x-1">
+                                <i class="fa-solid fa-bell-slash"></i>
+                                <span class="hidden sm:inline">關閉警報</span>
+                            </button>
+                        ` : ''}
+
+                        <button onclick="deleteTask('${task.id}')" title="刪除事項" 
+                            class="p-2.5 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-2xl transition active:scale-90">
+                            <i class="fa-solid fa-trash-can text-base"></i>
+                        </button>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+
+            updateCounts();
+        }
+
+        // ================= LocalStorage 本地儲存 =================
+        function saveTasksToStorage() {
+            if (!Array.isArray(tasks)) tasks = [];
+            if (!taskLists[currentListId]) {
+                taskLists[currentListId] = { name: '🌟 預設任務組', tasks: [] };
+            }
+            taskLists[currentListId].tasks = tasks;
+
+            localStorage.setItem('timekeeper_task_lists', JSON.stringify(taskLists));
+            localStorage.setItem('timekeeper_current_list_id', currentListId);
+        }
+
+        function loadTasksFromStorage() {
+            const savedLists = localStorage.getItem('timekeeper_task_lists');
+            const savedCurrentId = localStorage.getItem('timekeeper_current_list_id');
+
+            if (savedLists) {
+                try {
+                    taskLists = JSON.parse(savedLists) || {};
+                } catch(e) {
+                    taskLists = {};
+                }
+            }
+
+            // 若完全無資料，初始化預設組別
+            if (Object.keys(taskLists).length === 0) {
+                const oldSaved = localStorage.getItem('timekeeper_tasks');
+                let oldTasks = [];
+                if (oldSaved) {
+                    try { oldTasks = JSON.parse(oldSaved) || []; } catch(e) {}
+                }
+
+                taskLists = {
+                    'default': { name: '🌟 預設任務組', tasks: oldTasks }
+                };
+            }
+
+            currentListId = (savedCurrentId && taskLists[savedCurrentId]) ? savedCurrentId : Object.keys(taskLists)[0];
+            tasks = taskLists[currentListId]?.tasks || [];
+
+            updateTaskListSelectorUI();
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
 </body>
 </html>
